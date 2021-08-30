@@ -3,7 +3,7 @@ import math
 
 
 def median(ds: pd.Series) -> float:
-    sorted_vals = ds.sort_values
+    sorted_vals = ds.sort_values()
     l = len(sorted_vals)
     floor = math.floor(l / 2)
     ceiling = math.ceil(l / 2)

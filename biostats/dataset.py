@@ -4,10 +4,11 @@ from typing import Optional
 
 from biostats.arithmetic_mean import arithmetic_mean
 from biostats.half_rank import half_rank, rank
+from biostats.interquartile_range import interquartile_range
 from biostats.median import median
 from biostats.percentile import percentile
 from biostats.range import range
-from biostats.sample_variance import (
+from biostats.variance import (
     population_variance,
     population_standard_deviation,
     sample_variance,
@@ -52,6 +53,9 @@ class DataSet:
     # Get half rank where i is floor of what half rank wanted.
     def half_rank(self, col: str, i: int) -> float:
         return half_rank(self.values[col], i)
+
+    def interquartile_range(self, col: str) -> float:
+        return interquartile_range(self.values[col])
 
     def median(self, col: str) -> float:
         return median(self.values[col])
