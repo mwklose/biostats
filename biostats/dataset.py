@@ -1,22 +1,25 @@
 import pandas as pd
 from dataclasses import dataclass, field
+from typing import Optional
 
 
 @dataclass
 class DataSet:
-    values: pd.DataFrame
-    description: str
-    length: int
+    file: str
+    description: Optional[str] = None
+    values: pd.DataFrame = field(init=False)
 
-    # Open file by filename string
-    def __init__(self, file: str, description=None) -> None:
-        with open(file, "r") as f:
-            self.values = pd.read_csv(f)
-        self.description = description
-        self.length = self.get_length()
-
-    def get_length(self):
+    @property
+    def length(self) -> int:
         return len(self.values)
 
-    def get_description(self):
-        return self.description
+    @property
+    def arithmetic_mean(self, col) -> float:
+        return values[col].mean()
+
+    def __post_init__(self):
+        with open(self.file, "r") as f:
+            self.values = pd.read_csv(f)
+
+    def nth_moment(self, n):
+        pass
