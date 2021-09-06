@@ -1,14 +1,18 @@
 from unittest import TestCase
-from biostats.dataset import DataSet
+from biostats import DataSet
 import os
 
 TOTAL_SIZE = 15
 
 
 class TestInitialize(TestCase):
+    # TODO handle setting up d1
+    @classmethod
+    def setUpClass(cls):
+        d1 = DataSet(os.path.abspath("files/test.csv"), "Initial Dataset")
+
     def test_initialize(self):
         # Initialize with description
-        d1 = DataSet(os.path.abspath("files/test.csv"), "Initial Dataset")
         self.assertEqual(d1.length, TOTAL_SIZE)
         self.assertEqual(d1.description, "Initial Dataset")
 
@@ -18,8 +22,6 @@ class TestInitialize(TestCase):
         self.assertIsNone(d2.description)
 
     def test_means(self):
-        d1 = DataSet(os.path.abspath("files/test.csv"), "Initial Dataset")
-
         # Arithmetic Mean
         s = 0
         for v in d1.values["Total Number"]:
@@ -30,7 +32,6 @@ class TestInitialize(TestCase):
         )
 
     def test_percentiles(self):
-        d1 = DataSet(os.path.abspath("files/test.csv"), "Initial Dataset")
         d1.median("Total Number")
         d1.mode("Total Number")
         d1.percentile("Total Number", 0.5)
@@ -38,16 +39,26 @@ class TestInitialize(TestCase):
         d1.range("Total Number")
 
     def test_ranks(self):
-        d1 = DataSet(os.path.abspath("files/test.csv"), "Initial Dataset")
         d1.half_rank("Total Number", 3)
         d1.rank("Total Number", 3)
 
     def test_variances(self):
-        d1 = DataSet(os.path.abspath("files/test.csv"), "Initial Dataset")
         d1.population_variance("Total Number")
         d1.population_standard_deviation("Total Number")
         d1.sample_standard_deviation("Total Number")
         d1.sample_variance("Total Number")
+
+    def test_skewness(self):
+        d1.skewness("Total Number")
+
+    def test_kurtosis(self):
+        d1.kurtosis("Total Number")
+
+    def test_moments(self):
+        d1.rth_moment("Total Number", 2)
+        d1.rth_moment("Total Number", 3)
+        d1.rth_moment("Total Number", 4)
+        d1.rth_moment("Total Number", 5)
 
 
 if __name__ == "__main__":

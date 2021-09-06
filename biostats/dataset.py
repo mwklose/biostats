@@ -2,12 +2,15 @@ import pandas as pd
 from dataclasses import dataclass, field
 from typing import Optional
 
-from biostats.arithmetic_mean import arithmetic_mean
+import biostats
 from biostats.half_rank import half_rank, rank
 from biostats.interquartile_range import interquartile_range
+from biostats.kurtosis import kurtosis
 from biostats.median import median
 from biostats.percentile import percentile
 from biostats.range import range
+from biostats.rth_moment import rth_moment
+from biostats.skewness import skewness
 from biostats.variance import (
     population_variance,
     population_standard_deviation,
@@ -57,6 +60,9 @@ class DataSet:
     def interquartile_range(self, col: str) -> float:
         return interquartile_range(self.values[col])
 
+    def kurtosis(self, col: str) -> float:
+        pass
+
     def median(self, col: str) -> float:
         return median(self.values[col])
 
@@ -78,8 +84,14 @@ class DataSet:
     def rank(self, col: str, i: int) -> float:
         return rank(self.values[col], i)
 
+    def rth_moment(self, col: str, r: int) -> float:
+        return rth_moment(self.values[col], r)
+
     def sample_standard_deviation(self, col: str) -> float:
         return sample_standard_deviation(self.values[col])
 
     def sample_variance(self, col: str) -> float:
         return sample_variance(self.values[col])
+
+    def skewness(self, col: str) -> float:
+        pass
