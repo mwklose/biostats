@@ -5,7 +5,7 @@ import os
 TOTAL_SIZE = 15
 
 
-class TestInitialize(TestCase) -> None:
+class TestInitialize(TestCase):
     def setUp(self):
         self.d1 = DataSet(os.path.abspath("files/test.csv"), "Initial Dataset")
 
