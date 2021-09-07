@@ -61,13 +61,13 @@ class DataSet:
         return interquartile_range(self.values[col])
 
     def kurtosis(self, col: str) -> float:
-        pass
+        return kurtosis(self.values[col])
 
     def median(self, col: str) -> float:
         return median(self.values[col])
 
     def mode(self, col: str) -> float:
-        return self.values[col].mode()
+        return self.values[col].mode()  # Mode not included; it is easy enough.
 
     def percentile(self, col: str, p: float) -> float:
         return percentile(self.values[col], p)
@@ -94,4 +94,4 @@ class DataSet:
         return sample_variance(self.values[col])
 
     def skewness(self, col: str) -> float:
-        pass
+        return skewness(self.values[col])

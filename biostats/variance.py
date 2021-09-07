@@ -6,7 +6,7 @@ def population_variance(ds: pd.Series) -> float:
     mu = arithmetic_mean(ds)
     mus = pd.Series([mu] * len(ds))
     diff = ds.subtract(mus)
-    return sum(diff) / len(ds)
+    return sum(diff.pow(2)) / len(ds)
 
 
 def population_standard_deviation(ds: pd.Series) -> float:

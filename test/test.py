@@ -1,11 +1,19 @@
+import os
 from unittest import TestCase
 from biostats.dataset import DataSet
-import os
+from biostats.distribution import Distribution
+import biostats.normal_distribution as nd
+
+from scipy.stats import norm
 
 TOTAL_SIZE = 15
 
+import warnings
 
-class TestInitialize(TestCase):
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+
+
+class TestMeasures(TestCase):
     def setUp(self):
         self.d1 = DataSet(os.path.abspath("files/test.csv"), "Initial Dataset")
 
@@ -42,22 +50,38 @@ class TestInitialize(TestCase):
         self.d1.rank("Total Number", 3)
 
     def test_variances(self):
-        self.d1.population_variance("Total Number")
-        self.d1.population_standard_deviation("Total Number")
-        self.d1.sample_standard_deviation("Total Number")
-        self.d1.sample_variance("Total Number")
+        self.assertAlmostEqual(self.d1.population_variance("Total Number"), 6.6666667)
+        self.assertAlmostEqual(
+            self.d1.population_standard_deviation("Total Number"), 2.5819889
+        )
+        self.assertAlmostEqual(
+            self.d1.sample_standard_deviation("Total Number"), 2.6726124
+        )
+        self.assertAlmostEqual(self.d1.sample_variance("Total Number"), 7.1428571)
 
     def test_skewness(self):
-        self.d1.skewness("Total Number")
+        self.assertAlmostEqual(self.d1.skewness("Total Number"), -0.388557, places=5)
 
     def test_kurtosis(self):
-        self.d1.kurtosis("Total Number")
+        self.assertAlmostEqual(self.d1.kurtosis("Total Number"), -0.684923, places=5)
 
     def test_moments(self):
         self.d1.rth_moment("Total Number", 2)
         self.d1.rth_moment("Total Number", 3)
         self.d1.rth_moment("Total Number", 4)
         self.d1.rth_moment("Total Number", 5)
+
+
+class TestNormal(TestCase):
+    def setUp(self):
+        self.d1 = DataSet(os.path.abspath("files/test.csv"), "Initial Dataset")
+
+    def test_normal_pdf(self):
+        # test basic PDF
+        self.assertEqual(nd.NormalDistribution.pdf(0), norm.pdf(0))
+
+        # Test basic CDF
+        self.assertEqual(nd.NormalDistribution.cdf(0), norm.cdf(0))
 
 
 if __name__ == "__main__":
