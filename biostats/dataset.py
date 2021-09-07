@@ -2,7 +2,7 @@ import pandas as pd
 from dataclasses import dataclass, field
 from typing import Optional
 
-import biostats
+from biostats.arithmetic_mean import arithmetic_mean
 from biostats.half_rank import half_rank, rank
 from biostats.interquartile_range import interquartile_range
 from biostats.kurtosis import kurtosis
